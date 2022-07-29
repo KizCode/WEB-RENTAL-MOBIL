@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class MobilController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,7 @@ class MobilController extends Controller
     {
         //
         $mobil = Mobil::all();
-        return view('product.index');
+        return view('mobil.index', compact('mobil'));
     }
 
     /**
@@ -26,6 +30,7 @@ class MobilController extends Controller
     public function create()
     {
         //
+        return view('mobil.create');
     }
 
     /**
@@ -37,6 +42,22 @@ class MobilController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'merk' => 'required',
+            'type' => 'required',
+            'nopol' => 'required',
+            'stok' => 'required',
+            'harga' => 'required',
+        ]);
+        $mobil = new Mobil();
+        $mobil->merk = $request->merk;
+        $mobil->type = $request->type;
+        $mobil->nopol = $request->nopol;
+        $mobil->stok = $request->stok;
+        $mobil->harga = $request->harga;
+        $mobil->save();
+        return redirect()->route('mobil.index')->with('success', 'Task Created Successfully!');
+
     }
 
     /**
@@ -48,6 +69,8 @@ class MobilController extends Controller
     public function show($id)
     {
         //
+        $mobil = Mobil::findOrFail($id);
+        return view('mobil.show', compact('mobil'));
     }
 
     /**
@@ -59,6 +82,9 @@ class MobilController extends Controller
     public function edit($id)
     {
         //
+        $mobil = Mobil::findOrFail($id);
+        return view('mobil.edit', compact('mobil'));
+        
     }
 
     /**
@@ -71,6 +97,21 @@ class MobilController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validated = $request->validate([
+            'merk' => 'required',
+            'type' => 'required',
+            'nopol' => 'required',
+            'stok' => 'required',
+            'harga' => 'required',
+        ]);
+        $mobil = Mobil::findOrFail($id);
+        $mobil->merk = $request->merk;
+        $mobil->type = $request->type;
+        $mobil->nopol = $request->nopol;
+        $mobil->stok = $request->stok;
+        $mobil->harga = $request->harga;
+        $mobil->save();
+        return redirect(route('mobil.index'))->with('success', 'Data berhasil dibuat!');
     }
 
     /**
@@ -82,5 +123,8 @@ class MobilController extends Controller
     public function destroy($id)
     {
         //
+        $mobil = Mobil::findOrFail($id);
+        $mobil->delete();
+        return redirect()->route('mobil.index')->with('success', 'Data berhasil dihapus!');
     }
 }

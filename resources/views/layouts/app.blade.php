@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('DarkPen/js/main.js') }}"></script>
     <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
@@ -22,7 +22,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('DarkPen/css/bootstrap.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}"> --}}
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
@@ -39,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->

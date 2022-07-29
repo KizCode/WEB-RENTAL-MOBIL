@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MobilController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +32,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']],
             return view('admin.index');
         });
         Route::resource('home', BarangController::class);
-
+        Route::resource('mobil', MobilController::class);
     });
 

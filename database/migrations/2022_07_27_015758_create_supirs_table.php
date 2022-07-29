@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('supirs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('foto');
             $table->string('jk');
             $table->string('notlp');
+            $table->string('status');
             $table->timestamps();
         });
     }
