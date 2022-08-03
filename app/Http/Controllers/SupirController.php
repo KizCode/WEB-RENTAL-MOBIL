@@ -42,7 +42,7 @@ class SupirController extends Controller
         //validasi
         $validated = $request->validate([
             'nama' => 'required',
-            'foto' => 'required',
+            'foto' => 'required|image|max:2048',
             'status' => 'required',
             'notlp' => 'required',
             'alamat' => 'required'
@@ -95,7 +95,7 @@ class SupirController extends Controller
         //validasi
         $validated = $request->validate([
             'nama' => 'required',
-            'foto' => 'required',
+            'foto' => 'required|image|max:2048',
             'status' => 'required',
             'notlp' => 'required',
             'alamat' => 'required',
@@ -122,6 +122,7 @@ class SupirController extends Controller
     {
         $supir = Supir::findOrFail($id);
         $supir->delete();
-        return redirect()->route('supir.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('supir.index')
+            ->with('success', 'Data berhasil dihapus!');
     }
 }
