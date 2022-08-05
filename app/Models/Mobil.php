@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mobil extends Model
 {
     use HasFactory;
-    public $fillable = ['merk','type','nopol','stok','harga'];
+    public $fillable = ['merk','type','foto','stok','harga'];
 
     public $timestamps = true;
 }

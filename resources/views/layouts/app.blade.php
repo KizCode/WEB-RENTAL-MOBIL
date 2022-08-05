@@ -10,10 +10,17 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
     <script src="{{ asset('DarkPen/js/main.js') }}"></script>
-    <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('package/dist/sweetalert2.min.js') }}"></script>
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('js-sweet/sweetalert2.all.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+        });
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,9 +28,10 @@
     
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('DarkPen/css/bootstrap.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('package/dist/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}">
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
@@ -71,7 +79,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

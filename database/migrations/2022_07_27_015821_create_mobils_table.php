@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('mobils', function (Blueprint $table) {
             $table->id();
             $table->string('merk');
-            $table->string('type');
-            $table->string('nopol')->unique();
+            $table->string('type')->unique();
+            $table->string('foto');
             $table->integer('stok');
             $table->integer('harga');
             $table->timestamps();

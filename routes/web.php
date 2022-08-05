@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\SupirController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CustoController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('customer.index');
 });
 
 Auth::routes();
@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']],
             return view('admin.index');
         });
         Route::resource('home', BarangController::class);
+        Route::resource('customer', CustoController::class);
         Route::resource('mobil', MobilController::class);
         Route::resource('supir', SupirController::class);
     });

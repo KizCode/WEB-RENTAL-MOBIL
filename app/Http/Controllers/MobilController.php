@@ -1,15 +1,16 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use App\Models\Mobil;
 use Illuminate\Http\Request;
 
 class MobilController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,6 @@ class MobilController extends Controller
      */
     public function index()
     {
-        //
         $mobil = Mobil::all();
         return view('mobil.index', compact('mobil'));
     }
@@ -29,7 +29,6 @@ class MobilController extends Controller
      */
     public function create()
     {
-        //
         return view('mobil.create');
     }
 
@@ -41,23 +40,29 @@ class MobilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi
         $validated = $request->validate([
             'merk' => 'required',
             'type' => 'required',
-            'nopol' => 'required',
-            'stok' => 'required',
+            'foto' => 'required|image|max:2048',
+            'stock' => 'required',
             'harga' => 'required',
         ]);
+
         $mobil = new Mobil();
         $mobil->merk = $request->merk;
         $mobil->type = $request->type;
-        $mobil->nopol = $request->nopol;
-        $mobil->stok = $request->stok;
+        if($request->hasFile('foto')){
+            $image = $request->file('foto');
+            $name = rand(1000,9999).$image->getClientOriginalName();
+            $image->move('images/mobil/', $name);
+            $mobil->foto = $name;
+        }
+        $mobil->stock = $request->stock;
         $mobil->harga = $request->harga;
         $mobil->save();
-        return redirect()->route('mobil.index')->with('success', 'Task Created Successfully!');
-
+        return redirect()->route('mobil.index')
+            ->with('success', 'Data berhasil dibuat!');
     }
 
     /**
@@ -68,7 +73,6 @@ class MobilController extends Controller
      */
     public function show($id)
     {
-        //
         $mobil = Mobil::findOrFail($id);
         return view('mobil.show', compact('mobil'));
     }
@@ -81,10 +85,8 @@ class MobilController extends Controller
      */
     public function edit($id)
     {
-        //
         $mobil = Mobil::findOrFail($id);
         return view('mobil.edit', compact('mobil'));
-        
     }
 
     /**
@@ -96,22 +98,30 @@ class MobilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validasi
         $validated = $request->validate([
             'merk' => 'required',
             'type' => 'required',
-            'nopol' => 'required',
-            'stok' => 'required',
+            'foto' => 'required|image|max:2048',
+            'stock' => 'required',
             'harga' => 'required',
         ]);
+
         $mobil = Mobil::findOrFail($id);
         $mobil->merk = $request->merk;
         $mobil->type = $request->type;
-        $mobil->nopol = $request->nopol;
-        $mobil->stok = $request->stok;
+        if($request->hasFile('foto')){
+            $mobil->deleteImage(); // menghapus foto sebelum di update
+            $image = $request->file('foto');
+            $name = rand(1000,9999).$image->getClientOriginalName();
+            $image->move('images/mobil/', $name);
+            $mobil->foto = $name;
+        }
+        $mobil->stock = $request->stock;
         $mobil->harga = $request->harga;
         $mobil->save();
-        return redirect(route('mobil.index'))->with('success', 'Data berhasil dibuat!');
+        return redirect()->route('mobil.index')
+            ->with('success', 'Data berhasil diedit!');
     }
 
     /**
@@ -122,9 +132,10 @@ class MobilController extends Controller
      */
     public function destroy($id)
     {
-        //
         $mobil = Mobil::findOrFail($id);
+        $mobil->deleteImage();
         $mobil->delete();
-        return redirect()->route('mobil.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('mobil.index')
+            ->with('success', 'Data berhasil dihapus!');
     }
 }
